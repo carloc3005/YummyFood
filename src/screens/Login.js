@@ -1,60 +1,69 @@
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ImageBackground } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 
-export default function LoginScreen() {
+
+export default function Login() {
     const navigation = useNavigation();
-
-    const handleLogin = () => {
-        // Handle login logic here
-        navigation.navigate('Home');
-    };
-
     return (
-        <ImageBackground 
-            source={require('../../assets/images/trythis.jpg')} 
-            style={styles.backgroundImage}
-        >
-            <View style={styles.container}>
-                <Text style={styles.title}>Login</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Username"
-                    autoCapitalize="none"
+        <View className="bg-white h-full w-full">
+            <StatusBar style="light" />
+            <Image className="h-full w-full absolute" source={require('../../assets/images/background1.png')} />
+
+            {/* Login */}
+            <View className="flex-row justify-around w-full absolute">
+                <Animated.Image 
+                    entering={FadeInUp.delay(200).duration(1000).springify()} 
+                    className="h-[225] w-[90]" 
+                    source={require('../../assets/images/light1.png')} 
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    secureTextEntry
-                />
-                <Button title="Login" onPress={handleLogin} />
+                <Animated.Image 
+                    entering={FadeInUp.delay(400).duration(1000).springify()}
+                    className="h-[160] w-[65]"
+                    source={require('../../assets/images/light1.png')} /> 
             </View>
-        </ImageBackground>
+
+            {/* Title and form */}
+            <View className="h-full w-full flex justify-around items-center pt-40 pb-10">
+                {/* Title */}
+                <View className="flex items-center mb-6 mt-4">
+                    <Animated.Text entering={FadeInUp.duration(1000).springify()} className="text-white font-bold tracking-wider text-5xl">
+                        Login
+                    </Animated.Text>
+                </View>
+                
+                {/* Form */}
+                <View className="flex items-center space-y-4 w-[90%]">
+                    <Animated.View entering={FadeInDown.duration(1000).springify()} className="bg-black/5 p-4 rounded-2xl w-full">
+                        <TextInput 
+                            className="w-full text-base text-gray-700" 
+                            placeholder="Email" 
+                            placeholderTextColor="gray"
+                        />
+                    </Animated.View>
+                    <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="bg-black/5 p-4 rounded-2xl w-full">
+                        <TextInput 
+                            className="w-full text-base text-gray-700" 
+                            placeholder="Password" 
+                            placeholderTextColor="gray"
+                            secureTextEntry={true}
+                        />
+                    </Animated.View>
+                    <Animated.View entering={FadeInDown.delay(400).duration(1000).springify()} className="w-full">
+                        <TouchableOpacity className="w-full bg-sky-400 p-3 rounded-2xl mb-3">
+                            <Text className="text-xl font-bold text-white text-center">Login</Text>
+                        </TouchableOpacity>
+                    </Animated.View>
+                    <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()} className="flex-row justify-center">
+                        <Text>Don't have an account? </Text>
+                        <TouchableOpacity onPress={() => navigation.push('Signup')}>
+                            <Text className="text-blue-600">Signup</Text>
+                        </TouchableOpacity>
+                    </Animated.View>
+                </View>
+            </View>
+        </View>
     );
 }
-
-const styles = StyleSheet.create({
-    backgroundImage: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 16,
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',  // Slight white overlay to make text more readable
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 16,
-    },
-    input: {
-        width: '100%',
-        padding: 8,
-        marginVertical: 8,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 4,
-    },
-});
