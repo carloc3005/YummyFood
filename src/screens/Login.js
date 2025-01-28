@@ -4,9 +4,9 @@ import { StatusBar } from 'expo-status-bar';
 import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 
-
 export default function Login() {
-    const navigation = useNavigation();
+    const navigation = useNavigation(); // Hook for navigation
+
     return (
         <View className="bg-white h-full w-full">
             <StatusBar style="light" />
@@ -22,7 +22,8 @@ export default function Login() {
                 <Animated.Image 
                     entering={FadeInUp.delay(400).duration(1000).springify()}
                     className="h-[160] w-[65]"
-                    source={require('../../assets/images/light1.png')} /> 
+                    source={require('../../assets/images/light1.png')} 
+                /> 
             </View>
 
             {/* Title and form */}
@@ -52,7 +53,14 @@ export default function Login() {
                         />
                     </Animated.View>
                     <Animated.View entering={FadeInDown.delay(400).duration(1000).springify()} className="w-full">
-                        <TouchableOpacity className="w-full bg-sky-400 p-3 rounded-2xl mb-3">
+                        {/* Login Button with Navigation */}
+                        <TouchableOpacity 
+                            className="w-full bg-sky-400 p-3 rounded-2xl mb-3" 
+                            onPress={() => {
+                                console.log('Login button pressed');
+                                navigation.navigate('HomeScreen'); // Navigate to HomeScreen
+                            }}
+                        >
                             <Text className="text-xl font-bold text-white text-center">Login</Text>
                         </TouchableOpacity>
                     </Animated.View>
@@ -67,3 +75,4 @@ export default function Login() {
         </View>
     );
 }
+
